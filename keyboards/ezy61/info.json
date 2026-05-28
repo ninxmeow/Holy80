@@ -1,0 +1,46 @@
+{
+    "processor": "AT32F405",
+    "bootloader": "tinyuf2",
+
+    "encoder": {
+        "rotary": [
+            {"pin_a": "B5", "pin_b": "B6"}
+        ]
+    },
+    "keyboard_name": "EC61",
+    "manufacturer": "ezy",
+    "maintainer": "ezy",
+    "usb": {
+        "vid": "0xCAFE",
+        "pid": "0x0B98",
+        "device_version": "0.0.1",
+        "force_nkro": true,
+        "shared_endpoint": {
+            "keyboard": true
+        }
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgblight": false,
+        "audio": false,
+        "rgb_matrix": true,
+        "encoder": true
+    },
+    "build": {
+        "lto": true,
+        "debounce_type": "sym_eager_pk"
+    },
+    "diode_direction": "COL2ROW",
+    "debounce": 2,
+    "bootmagic": {
+        "matrix": [0, 0]
+    },
+    "rgb_matrix": {
+        "driver": "aw20216"
+    }
+}

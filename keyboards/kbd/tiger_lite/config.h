@@ -1,0 +1,139 @@
+/* Copyright 2023 OctopusZ
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#define LOCKING_SUPPORT_ENABLE
+#define LOCKING_RESYNC_ENABLE
+
+#define BACKLIGHT_PWM_DRIVER    PWMD2
+#define BACKLIGHT_PWM_CHANNEL   4
+#define BACKLIGHT_PAL_MODE      1
+#define BACKLIGHT_LEVELS 5
+#define BACKLIGHT_DEFAULT_ON
+
+#ifdef RGB_MATRIX_ENABLE
+    // #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_REACTIVE_NEXUS
+    #define RGB_MATRIX_SAT_STEP 26
+    #define RGB_MATRIX_SPD_STEP 51
+    #define RGB_MATRIX_VAL_STEP 26
+    #define WS2812_PWM_DRIVER PWMD1
+    #define WS2812_PWM_CHANNEL 3
+    #define WS2812_PWM_PAL_MODE 1
+    #define WS2812_DMA_STREAM AT32_DMA1_STREAM1
+    #define WS2812_DMAMUX_ID AT32_DMAMUX_TMR1_OVERFLOW
+
+    #define RGB_MATRIX_LED_COUNT 87
+    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 128
+    #define RGB_DISABLE_WHEN_USB_SUSPENDED
+
+
+
+#define ENABLE_RGB_MATRIX_ALPHAS_MODS
+#define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
+#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+#define ENABLE_RGB_MATRIX_BREATHING
+#define ENABLE_RGB_MATRIX_BAND_SAT
+#define ENABLE_RGB_MATRIX_BAND_VAL
+#define ENABLE_RGB_MATRIX_BAND_PINWHEEL_SAT
+#define ENABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
+#define ENABLE_RGB_MATRIX_BAND_SPIRAL_SAT
+#define ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL
+#define ENABLE_RGB_MATRIX_CYCLE_ALL
+#define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+#define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
+#define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#define ENABLE_RGB_MATRIX_CYCLE_OUT_IN
+#define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
+#define ENABLE_RGB_MATRIX_CYCLE_PINWHEEL
+#define ENABLE_RGB_MATRIX_CYCLE_SPIRAL
+#define ENABLE_RGB_MATRIX_DUAL_BEACON
+#define ENABLE_RGB_MATRIX_RAINBOW_BEACON
+#define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS
+#define ENABLE_RGB_MATRIX_RAINDROPS
+#define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
+#define ENABLE_RGB_MATRIX_HUE_BREATHING
+#define ENABLE_RGB_MATRIX_HUE_PENDULUM
+#define ENABLE_RGB_MATRIX_HUE_WAVE
+#define ENABLE_RGB_MATRIX_PIXEL_RAIN
+#define ENABLE_RGB_MATRIX_PIXEL_FLOW
+#define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+
+#endif
+
+#ifdef UNDERGLOW_RGB_MATRIX_ENABLE
+#define UG_RGB_MATRIX_ANIMATIONS
+#endif
+
+#ifdef DYNAMIC_RGB_INDICATORS_ENABLE
+#define ENABLE_RGB_INDICATORS_ANIMATIONS
+#endif
+
+#ifdef VIA_ENABLE
+#define DYNAMIC_KEYMAP_LAYER_COUNT 10
+#endif
+
+#ifdef OPENRGB_ENABLE
+#define OPENRGB_DIRECT_MODE_USE_UNIVERSAL_BRIGHTNESS
+#endif
+
+#ifdef DYNAMIC_TAP_DANCE_ENABLE
+#define DYNAMIC_TAP_DANCE_ENTRIES 10
+#endif
+
+#ifdef DYNAMIC_COMBOS_ENABLE
+#define DYNAMIC_COMBOS_ENTRIES 10
+#endif
+
+
+#ifdef RGB_MATRIX_ENABLE
+#    define WS2812_PWM_DRIVER PWMD1
+#    define WS2812_PWM_CHANNEL 3
+#    define WS2812_PWM_PAL_MODE 1
+#    define WS2812_DMA_STREAM AT32_DMA1_STREAM1
+#    define WS2812_DMAMUX_ID AT32_DMAMUX_TMR1_OVERFLOW
+#endif
+
+#define WEAR_LEVELING_LOGICAL_SIZE 8192
+#define WEAR_LEVELING_BACKING_SIZE 16384
+
+#ifdef QMK_USB_SUPPORT_HS
+#    define USB_DRIVER USBD2
+// #define HIDRGB_EPSIZE 1024
+#    define USB_POLLING_INTERVAL_MS 1 // 8kHz
+// #define USB_POLLING_INTERVAL_MS 2  // 4kHz
+// #define USB_POLLING_INTERVAL_MS 3  // 2kHz
+// #define USB_POLLING_INTERVAL_MS 4  // 1kHz
+// #define USB_POLLING_INTERVAL_MS 7  // 125Hz
+#else
+#    define USB_POLLING_INTERVAL_MS 4 // 1kHz
+#    define USB_DRIVER USBD1
+#endif
+
+#ifdef DEBUG_CONFIG
+#    define MATRIX_DEBUG_PIN A9
+#    include "../debug_config.h"
+#endif
+
+
+
+#define HE_VIERSION_CODE 0
+#define HE_VIERSION {'2','5','0','6','0','3','0','a'}
+
+#define EECONFIG_MAGIC_NUMBER (uint16_t)0x0009 // When changing, decrement this value to avoid future re-init issues
+#define USB_SUSPEND_WAKEUP_DELAY 500
+
+#define WS2812_PWM_TARGET_PERIOD 800000

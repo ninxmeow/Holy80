@@ -1,0 +1,43 @@
+{
+    "processor": "AT32F405",
+    "bootloader": "tinyuf2",
+    "matrix_pins": {
+        "cols": ["B10", "B2", "B1", "B0", "C5", "C4", "A7", "A6"],
+        "rows": ["A4", "A5", "F5", "F4","A3","A2","B9","B8","B7","B6","B5","B4","B3","D2","C12","B13"]
+    },
+    "keyboard_name": "Skydigital nkey8K",
+    "manufacturer": "Skydigital",
+    "usb": {
+        "vid": "0x1C6C",
+        "pid": "0x2312",
+        "device_version": "0.0.2",
+        "force_nkro": true
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgblight": false,
+        "audio": false,
+        "rgb_matrix": false,
+        "encoder": false
+    },
+    "build": {
+        "lto": true,
+        "debounce_type": "sym_eager_pk"
+    },
+    "diode_direction": "COL2ROW",
+    "debounce": 20,
+    "bootmagic": {
+        "matrix": [
+            14,7
+
+        ]
+    },
+    "rgb_matrix": {
+        "driver": "ws2812"
+    }
+}
