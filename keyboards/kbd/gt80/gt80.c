@@ -17,18 +17,18 @@
 #include QMK_KEYBOARD_H
 #include "usb_util.h"
 #include "usb_main.h"
-#ifdef RGB_MATRIX_ENABLE
 
 typedef union {
   uint32_t raw;
   struct {
-    uint8_t     pollingInterva :8;
+    uint8_t     pollingInterval :8;
     uint8_t     lightBar :8; // 0 for off; 1 for on
   };
 } user_config_t;
 
 user_config_t user_config;
 
+#ifdef RGB_MATRIX_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
@@ -77,17 +77,36 @@ bool rgb_matrix_indicators_kb(void) {
 
 #endif
 
+bool via_hid_report_rate_set_kb(uint8_t polling_interval) {
+    if (polling_interval < 1 || polling_interval > 4) {
+        return true;
+    }
+    if (user_config.pollingInterval == polling_interval) {
+        return true;
+    }
+
+    user_config.pollingInterval = polling_interval;
+    eeconfig_update_user(user_config.raw);
+    NVIC_SystemReset();
+    return true;
+}
+
+bool via_hid_report_rate_get_kb(uint8_t *polling_interval) {
+    *polling_interval = user_config.pollingInterval;
+    return true;
+}
+
 
 
 
 void eeconfig_init_user(void) {  // EEPROM is getting reset!
   user_config.raw = 0;
-  user_config.pollingInterva = 1;
+  user_config.pollingInterval = 1;
   user_config.lightBar = 1;
   eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
 }
 void keyboard_post_init_user(void) {
   // Read the user config from EEPROM
   user_config.raw = eeconfig_read_user();
-  usb_set_pollingInterva(user_config.pollingInterva);
+  usb_set_pollingInterva(user_config.pollingInterval);
 }

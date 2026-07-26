@@ -277,6 +277,16 @@ __attribute__((weak)) bool via_command_kb(uint8_t *data, uint8_t length) {
     return false;
 }
 
+__attribute__((weak)) bool via_hid_report_rate_set_kb(uint8_t polling_interval) {
+    (void)polling_interval;
+    return false;
+}
+
+__attribute__((weak)) bool via_hid_report_rate_get_kb(uint8_t *polling_interval) {
+    (void)polling_interval;
+    return false;
+}
+
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
     uint8_t *command_id   = &(data[0]);
@@ -455,6 +465,18 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             break;
         }
 #endif
+        case id_rw_hid_report_rate: {
+            bool handled;
+            if (command_data[0]) {
+                handled = via_hid_report_rate_set_kb(command_data[1]);
+            } else {
+                handled = via_hid_report_rate_get_kb(&command_data[1]);
+            }
+            if (!handled) {
+                *command_id = id_unhandled;
+            }
+            break;
+        }
     case id_get_hell_version:
     {
         command_data[0] = HE_VIERSION_CODE;

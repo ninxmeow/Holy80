@@ -93,6 +93,7 @@ enum via_command_id {
     id_dynamic_keymap_set_buffer            = 0x13,
     id_dynamic_keymap_get_encoder           = 0x14,
     id_dynamic_keymap_set_encoder           = 0x15,
+    id_rw_hid_report_rate                   = 0x2A,
     id_get_hell_version                     = 0x2E,
     id_get_hell_version_name                = 0x2F,
     id_unhandled                            = 0xFF,
@@ -169,6 +170,11 @@ void via_set_device_indication(uint8_t value);
 
 // Called by QMK core to process VIA-specific keycodes.
 bool process_record_via(uint16_t keycode, keyrecord_t *record);
+
+// Keyboard-level hooks for the legacy tofix report-rate command.
+// Return false when the keyboard does not implement report-rate control.
+bool via_hid_report_rate_set_kb(uint8_t polling_interval);
+bool via_hid_report_rate_get_kb(uint8_t *polling_interval);
 
 // These are made external so that keyboard level custom value handlers can use them.
 #if defined(BACKLIGHT_ENABLE)
