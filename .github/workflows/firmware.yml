@@ -1,0 +1,45 @@
+name: Firmware
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.keyboard }}:via
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_cli
+    strategy:
+      fail-fast: false
+      matrix:
+        keyboard:
+          - kbd/gt80
+          - kbd/tiger_lite
+
+    steps:
+      - name: Check out firmware
+        uses: actions/checkout@v4
+
+      - name: Install Python dependencies
+        run: python3 -m pip install -r requirements.txt
+
+      - name: Build VIA firmware
+        run: make -j2 ${{ matrix.keyboard }}:via
+
+      - name: Verify UF2 artifact
+        shell: bash
+        run: |
+          artifact=${{ matrix.keyboard == 'kbd/gt80' && 'kbd_gt80_via.uf2' || 'kbd_tiger_lite_via.uf2' }}
+          test -s "$artifact"
+          sha256sum "$artifact"
+
+      - name: Upload UF2 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.keyboard == 'kbd/gt80' && 'holy80-via' || 'tiger-lite-v2-via' }}
+          path: ${{ matrix.keyboard == 'kbd/gt80' && 'kbd_gt80_via.uf2' || 'kbd_tiger_lite_via.uf2' }}
+          if-no-files-found: error
